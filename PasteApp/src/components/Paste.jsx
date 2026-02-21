@@ -1,4 +1,4 @@
-import { Calendar, Copy, Eye, PencilLine, Trash2, Search } from "lucide-react";
+import { Calendar, Copy, Eye, PencilLine, Trash2, Search, Share2 } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { removeFromPastes } from "../redux/pasteSlice";
@@ -11,6 +11,23 @@ const Paste = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredPastes = pastes.filter((p) => p.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  const handleShare = async (paste) => {
+    const shareUrl = `${window.location.origin}/pastes/${paste._id}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: paste.title || "Paste",
+          text: paste.content,
+          url: shareUrl,
+        });
+        return;
+      }
+      await navigator.clipboard.writeText(shareUrl);
+      toast.success("Share link copied");
+    } catch {
+      toast.error("Unable to share right now");
+    }
+  };
 
   return (
     <div className="w-full py-10 max-w-[1200px] mx-auto px-5">
@@ -34,6 +51,7 @@ const Paste = () => {
                 <a href={`/?pasteId=${paste._id}`} className="p-2 bg-slate-800 rounded-lg text-slate-400 hover:text-blue-400 hover:bg-slate-700"><PencilLine size={18} /></a>
                 <button onClick={() => dispatch(removeFromPastes(paste._id))} className="p-2 bg-slate-800 rounded-lg text-slate-400 hover:text-red-400 hover:bg-slate-700"><Trash2 size={18} /></button>
                 <a href={`/pastes/${paste._id}`} className="p-2 bg-slate-800 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-slate-700"><Eye size={18} /></a>
+                <button onClick={() => handleShare(paste)} className="p-2 bg-slate-800 rounded-lg text-slate-400 hover:text-indigo-400 hover:bg-slate-700"><Share2 size={18} /></button>
               </div>
             </div>
             <p className="text-slate-400 text-sm line-clamp-3 mb-6 font-mono leading-relaxed">{paste.content}</p>
