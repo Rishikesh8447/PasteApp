@@ -17,26 +17,26 @@ const ViewPaste = () => {
           type="text"
           value={paste.title}
           disabled
-          className="w-full bg-white border border-gray-300 rounded-lg p-3 shadow-sm font-semibold text-gray-700"
+          className="w-full bg-[#1e293b] border border-slate-700 rounded-xl p-4 shadow-inner font-semibold text-slate-100"
         />
-        <div className="w-full flex flex-col items-start overflow-hidden rounded-xl border border-gray-200 shadow-2xl bg-white">
-          <div className="w-full bg-gray-100 flex items-center justify-between px-4 py-2 border-b border-gray-200">
+        <div className="w-full flex flex-col items-start overflow-hidden rounded-2xl border border-slate-800 shadow-2xl bg-[#0f172a]">
+          <div className="w-full bg-slate-900/50 flex items-center justify-between px-6 py-4 border-b border-slate-800">
             <div className="flex gap-x-2">
-              <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
-              <div className="w-3 h-3 rounded-full bg-[#FEBC2E]" />
-              <div className="w-3 h-3 rounded-full bg-[#28C842]" />
+              <div className="w-3 h-3 rounded-full bg-red-500/80" />
+              <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+              <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
             </div>
             <button
               onClick={() => { navigator.clipboard.writeText(paste.content); toast.success("Copied"); }}
-              className="p-2 hover:bg-gray-200 rounded-md"
+              className="p-2 text-slate-400 hover:text-indigo-400 transition-colors rounded-md"
             >
-              <Copy size={18} className="text-gray-600" />
+              <Copy size={20} />
             </button>
           </div>
           <textarea
             value={paste.content}
             disabled
-            className="w-full p-6 text-gray-800 leading-relaxed font-mono text-sm bg-gray-50/50 cursor-default"
+            className="w-full p-8 bg-transparent text-slate-300 font-mono text-sm leading-relaxed outline-none min-h-[500px] cursor-default"
             rows={20}
           />
         </div>
